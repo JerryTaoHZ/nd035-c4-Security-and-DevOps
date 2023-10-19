@@ -1,10 +1,13 @@
 package com.example.demo.controllers;
 
+import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +31,9 @@ public class UserController {
 	@Autowired
 	private CartRepository cartRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	@GetMapping("/id/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		return ResponseEntity.of(userRepository.findById(id));
@@ -40,14 +46,32 @@ public class UserController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
-		User user = new User();
-		user.setUsername(createUserRequest.getUsername());
-		Cart cart = new Cart();
-		cartRepository.save(cart);
-		user.setCart(cart);
-		userRepository.save(user);
-		return ResponseEntity.ok(user);
+	public ResponseEntity createUser(@RequestBody CreateUserRequest createUserRequest) {
+		String pwd = createUserRequest.getPassword();
+		if(pwd.equals(createUserRequest.getConfirmPassword()) &&
+			pwd.length()>7) {
+			User user = new User();
+			user.setUsername(createUserRequest.getUsername());
+			user.setSalt(createSalt());
+			user.setPassword(bCryptPasswordEncoder.encode(pwd));
+
+			Cart cart = new Cart();
+			cartRepository.save(cart);
+			user.setCart(cart);
+			userRepository.save(user);
+			return ResponseEntity.ok(user);
+		} else {
+			return ResponseEntity.ok("password and confirmPassword are not matched. Please try again.");
+		}
+	}
+
+	// Method to generate a Salt
+	private static byte[] createSalt() {
+		SecureRandom random = new SecureRandom();
+		byte[] salt = new byte[16];
+		random.nextBytes(salt);
+		System.out.println(Arrays.toString(salt));
+		return salt;
 	}
 	
 }
