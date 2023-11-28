@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -35,8 +35,8 @@ public class UserTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
-    private BCryptPasswordEncoder bEncoder;
+//    @Mock
+//    private BCryptPasswordEncoder bEncoder;
 
     @Before
     public void setUp() {
@@ -45,7 +45,7 @@ public class UserTest {
 
     @Test
     public void CreateUserHappyPath() {
-        when(bEncoder.encode("password")).thenReturn("thisIsHashed");
+//        when(bEncoder.encode("password")).thenReturn("thisIsHashed");
 
         CreateUserRequest r = new CreateUserRequest();
         r.setUsername("Jerry");
