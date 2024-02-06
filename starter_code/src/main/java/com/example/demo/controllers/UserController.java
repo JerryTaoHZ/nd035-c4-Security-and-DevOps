@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,39 +49,70 @@ public class UserController {
 		User user = userRepository.findByUsername(username);
 		return user == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(user);
 	}
-	
+
 	@PostMapping("/create")
 	public ResponseEntity createUser(@RequestBody CreateUserRequest createUserRequest) {
 		log.info("UserController:createUser method execution started.. ");
+
 		String pwd = createUserRequest.getPassword();
 		if(pwd.equals(createUserRequest.getConfirmPassword()) &&
-			pwd.length()>7) {
+				pwd.length()>7) {
 			User user = new User();
 			user.setUsername(createUserRequest.getUsername());
-			log.info("user name set with " + createUserRequest.getUsername());
-			user.setSalt(createSalt());
+				log.info("user name set with " + createUserRequest.getUsername());
+
+//			user.setSalt(createSalt());
+
 //			user.setPassword(bCryptPasswordEncoder.encode(pwd));
 			user.setPassword(pwd);
 
 			Cart cart = new Cart();
 			cartRepository.save(cart);
 			user.setCart(cart);
+
 			userRepository.save(user);
 			log.info("UserController:createUser method execution ended.. ");
+
 			return ResponseEntity.ok(user);
 		} else {
 			log.info("password and confirmPassword are not matched. Please try again.");
-			return ResponseEntity.ok("password and confirmPassword are not matched. Please try again.");
+			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+//	@PostMapping("/create")
+//	public ResponseEntity createUser0(@RequestBody CreateUserRequest createUserRequest) {
+//		log.info("UserController:createUser method execution started.. ");
+//
+//		String pwd = createUserRequest.getPassword();
+//		if(pwd.equals(createUserRequest.getConfirmPassword()) &&
+//			pwd.length()>7) {
+//			User user = new User();
+//			user.setUsername(createUserRequest.getUsername());
+//			log.info("user name set with " + createUserRequest.getUsername());
+//			user.setSalt(createSalt());
+////			user.setPassword(bCryptPasswordEncoder.encode(pwd));
+//			user.setPassword(pwd);
+//
+//			Cart cart = new Cart();
+//			cartRepository.save(cart);
+//			user.setCart(cart);
+//			userRepository.save(user);
+//			log.info("UserController:createUser method execution ended.. ");
+//			return ResponseEntity.ok(user);
+//		} else {
+//			log.info("password and confirmPassword are not matched. Please try again.");
+//			return ResponseEntity.ok("password and confirmPassword are not matched. Please try again.");
+//		}
+//	}
 
 	// Method to generate a Salt
-	private static byte[] createSalt() {
-		SecureRandom random = new SecureRandom();
-		byte[] salt = new byte[16];
-		random.nextBytes(salt);
-		System.out.println(Arrays.toString(salt));
-		return salt;
-	}
+//	private static byte[] createSalt() {
+//		SecureRandom random = new SecureRandom();
+//		byte[] salt = new byte[16];
+//		random.nextBytes(salt);
+//		System.out.println(Arrays.toString(salt));
+//		return salt;
+//	}
 	
 }
