@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout
@@ -8,17 +9,15 @@
         <SplunkHttp
                 name="splunkhttp"
                 url="http://localhost:8088"
-                token="4b1b7e64-5942-45d1-b838-85fef90af301"
+                token="e540c5f5-a7c4-46c1-8ec2-7f20e957278b"
                 host="localhost"
-                index="test_dev_logs"
-                type="raw"
-                source="test-logs"
+                index="udacity-ecomm-dev"
+                source="udacity-eComm-logs"
                 sourcetype="log4j"
                 messageFormat="text"
                 disableCertificateValidation="true">
             <PatternLayout pattern="%m" />
         </SplunkHttp>
-
     </Appenders>
 
     <Loggers>
@@ -28,4 +27,5 @@
             <AppenderRef ref="splunkhttp" />
         </Root>
     </Loggers>
+
 </Configuration>

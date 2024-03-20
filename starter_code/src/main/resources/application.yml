@@ -1,8 +1,8 @@
-logging:
-#  config: logback.xml
-  file:
-#    name: /Users/zhiyuant/Study/Java/jwdnd/SecurityDevOps/nd035-c4-Security-and-DevOps/starter_code/spring-test.log
-    name: spring-test.log
-  level:
-#    root:info # the default level
-    com.example.demo: trace
+#logging:
+##  config: logback.xml
+#  file:
+##    name: /Users/zhiyuant/Study/Java/jwdnd/SecurityDevOps/nd035-c4-Security-and-DevOps/starter_code/spring-test.log
+#    name: spring-test.log
+#  level:
+##    root:info # the default level
+#    com.example.demo: trace

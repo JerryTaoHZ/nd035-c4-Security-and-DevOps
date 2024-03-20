@@ -14,7 +14,14 @@ public class TestUtils {
                 f.setAccessible(true);
                 wasPrivate = true;
             }
-        } catch (NoSuchFieldException e) {
+
+            f.set(target, toInject);
+
+            if(wasPrivate){
+                f.setAccessible(false);
+            }
+
+        } catch (NoSuchFieldException | IllegalAccessException e){
             e.printStackTrace();
         }
 

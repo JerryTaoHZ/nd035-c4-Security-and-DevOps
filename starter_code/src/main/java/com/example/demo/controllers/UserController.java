@@ -40,7 +40,7 @@ public class UserController {
 
 	@PostMapping("/create")
 	public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
-		log.info("UserController#createUser method execution started.. ");
+		log.info("UserController#createUser execution started.. ");
 
 		User user = new User();
 		user.setUsername(createUserRequest.getUsername());
@@ -53,15 +53,23 @@ public class UserController {
 				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())){
 			//System.out.println("Error - Either length is less than 7 or pass and conf pass do not match. Unable to create ",
 			//		createUserRequest.getUsername());
-			log.info("Improper password. Please try again.");
+//			log.info("CreateUser request failures. Improper password. Please try again.");
+			log.error("CreateUser request failures. Improper password. Please try again.");
 			return ResponseEntity.badRequest().build();
 		}
 
-		log.info("Create a new use with the name of " + createUserRequest.getUsername());
+//		if(userRepository.findByUsername(createUserRequest.getUsername())
+//				.getUsername().equals(createUserRequest.getUsername())) {
+		if(userRepository.findByUsername(createUserRequest.getUsername()) != null) {
+			log.error("CreateUser request failures. User Exists!");
+			return ResponseEntity.badRequest().build();
+		}
+
+		log.info("CreateUser request successes.\nCreate a new use with the name of " + createUserRequest.getUsername());
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
 
-		log.info("UserController#createUser method execution finished.. ");
+		log.info("UserController#createUser execution finished.. ");
 		return ResponseEntity.ok(user);
 	}
 	

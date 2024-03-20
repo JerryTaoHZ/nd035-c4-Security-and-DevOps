@@ -1,16 +1,28 @@
 package com.example.demo;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.example.demo.model.requests.CreateUserRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SareetaApplicationTests {
 
 	@Test
 	public void contextLoads() {
+	}
+
+	@Test
+	public void forJackson1() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		CreateUserRequest request = new CreateUserRequest();
+		request.setUsername("Jerry");
+
+		String s = mapper.writeValueAsString(request);
+
+		System.out.println(s);
 	}
 
 }

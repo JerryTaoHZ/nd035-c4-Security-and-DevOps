@@ -17,9 +17,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cart")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cart {
 	
 	@Id
@@ -93,5 +97,15 @@ public class Cart {
 			total = new BigDecimal(0);
 		}
 		total = total.subtract(item.getPrice());
+	}
+
+	@Override
+	public String toString() {
+		return "Cart{" +
+				"id=" + id +
+				", items=" + items +
+				", user=" + user +
+				", total=" + total +
+				'}';
 	}
 }

@@ -17,9 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_order")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserOrder {
 
 	@Id
@@ -81,5 +85,14 @@ public class UserOrder {
 		order.setUser(cart.getUser());
 		return order;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserOrder{" +
+				"id=" + id +
+				", items=" + items +
+				", user=" + user +
+				", total=" + total +
+				'}';
+	}
 }
