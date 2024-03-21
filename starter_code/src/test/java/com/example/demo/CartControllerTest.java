@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.MockingData;
 import com.example.demo.controllers.CartController;
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.repositories.CartRepository;
@@ -18,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-//import static org.junit.jupiter.api.AssertEquals.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;

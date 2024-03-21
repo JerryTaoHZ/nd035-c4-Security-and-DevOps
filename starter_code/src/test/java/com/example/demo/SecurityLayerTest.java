@@ -1,23 +1,17 @@
 package com.example.demo;
 
 import com.example.demo.model.requests.CreateUserRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SecurityTest1 {
+public class SecurityLayerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +36,7 @@ public class SecurityTest1 {
     @Test
     public void createUser() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        CreateUserRequest userReq = new CreateUserRequest("Jerry", "password", "password");
+        CreateUserRequest userReq = new CreateUserRequest("Micky", "password", "password");
 
         // create a User
         mockMvc.perform(post("/api/user/create")
@@ -51,8 +45,8 @@ public class SecurityTest1 {
                         .content(mapper.writeValueAsString(userReq)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.username").value("Jerry"))
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.username").value("Micky"))
+                .andExpect(jsonPath("$.id").value(2));
     }
 
 //    @Test

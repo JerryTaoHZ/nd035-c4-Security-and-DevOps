@@ -63,10 +63,10 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Cart cart = user.getCart();
-		System.out.println(cart);
+//		System.out.println(cart);
 		IntStream.range(0, request.getQuantity())
 			.forEach(i -> cart.removeItem(item.get()));
-		System.out.println(cart);
+//		System.out.println(cart);
 		cartRepository.save(cart);
 		return ResponseEntity.ok(cart);
 	}

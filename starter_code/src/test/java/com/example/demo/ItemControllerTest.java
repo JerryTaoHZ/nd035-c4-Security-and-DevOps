@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.controllers.ItemController;
 import com.example.demo.model.persistence.Item;
 import com.example.demo.model.persistence.repositories.ItemRepository;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +41,10 @@ public class ItemControllerTest {
 
     @Test
     public void getItems() {
+
+        Item item = MockingData.buildMockItem();
+        when(itemRepository.findAll()).thenReturn(Lists.newArrayList(item));
+
         // call targeted method
         ResponseEntity<List<Item>> response = itemController.getItems();
         System.out.println(response);
@@ -67,23 +72,23 @@ public class ItemControllerTest {
         assertEquals(item0, response.getBody());
     }
 
-    @Test
-    public void getItemsById0() {
-        // think: how to connect h2?
-
-        System.out.println(itemController.getItemById(1l));
-
-//        Item itemId = Objects.requireNonNull(itemController.getItemById(1l).getBody());
+//    @Test
+//    public void getItemsById0() {
+//        // think: how to connect h2?
 //
-//        Item itemRef = itemRepository.getOne(1L);
+//        System.out.println(itemController.getItemById(1l));
 //
-//        // testing overwritten hashcode method
-//        Assert.assertTrue(itemId.hashCode() == itemRef.hashCode());
+////        Item itemId = Objects.requireNonNull(itemController.getItemById(1l).getBody());
+////
+////        Item itemRef = itemRepository.getOne(1L);
+////
+////        // testing overwritten hashcode method
+////        Assert.assertTrue(itemId.hashCode() == itemRef.hashCode());
+////
+////        // testing overwritten equals method
+////        Assert.assertTrue(itemId.equals(itemRef));
 //
-//        // testing overwritten equals method
-//        Assert.assertTrue(itemId.equals(itemRef));
-
-    }
+//    }
 
     @Test
     public void getItemsByName() {

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.archived;
 
 import com.example.demo.model.requests.CreateUserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
