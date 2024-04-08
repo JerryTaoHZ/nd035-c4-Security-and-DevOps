@@ -23,13 +23,14 @@ public class SecurityLayerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private String bearer;
+
+//    private String bearer;
 
     @Test
     public void ForbiddenWhenUnlogin() throws Exception {
         mockMvc.perform(get("/api/user/id/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andDo(print());
     }
 
